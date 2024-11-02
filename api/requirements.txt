@@ -1,5 +1,0 @@
-fastapi[standard]
-uvicorn[standard]
-pydantic
-google-generativeai
-openai
