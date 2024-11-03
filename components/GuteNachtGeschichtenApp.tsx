@@ -6,11 +6,12 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import CharacterCreationForm from './CharacterCreationForm';
+import CreatureCreationForm from './CreatureCreationForm';
 import StoryGenerationForm from './StoryGenerationForm';
 import GeneratedStoryCard from './GeneratedStoryCard';
 
 interface Character {
-    id: number;
+    id: string;
     name: string;
     age: string;
     gender: string;
@@ -18,10 +19,21 @@ interface Character {
     interests: string;
 }
 
+interface Creature {
+    id: string;
+    name: string;
+    // age: string;
+    gender: string;
+    looks_like: string;
+    personality_traits: string;
+    interests: string;
+}
+
 const GuteNachtGeschichtenApp = () => {
-    const baseUrl = process.env.NEXT_PUBLIC_KIDS_BEDTIME_STORIES_API_URL ? process.env.NEXT_PUBLIC_KIDS_BEDTIME_STORIES_API_URL : "https://kids-bedtime-stories-api.onrender.com/api";
+    const baseUrl = process.env.NEXT_PUBLIC_KIDS_BEDTIME_STORIES_API_URL;
     console.log("API URL: " + baseUrl)
     const [characters, setCharacters] = useState<Character[]>([]);
+    const [creatures, setCreatures] = useState<Creature[]>([]);
     const [locations, setLocations] = useState<string[]>([]);
     const [educational_topic, setEducationalTopics] = useState<string[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
@@ -34,8 +46,18 @@ const GuteNachtGeschichtenApp = () => {
         personality_traits: ['']
     });
 
+    const [newCreature, setNewCreature] = useState({
+        name: '',
+        // age: '',
+        gender: '',
+        looks_like: '',
+        interests: [''],
+        personality_traits: ['']
+    });
+
     const [storyRequest, setStoryRequest] = useState({
         characters: [] as Character[], // Vollständige Character-Objekte speichern
+        creatures: [] as Creature[], // Vollständige Creature-Objekte speichern
         location: '',
         educational_topic: '',
         age_group: ''
@@ -53,6 +75,7 @@ const GuteNachtGeschichtenApp = () => {
                 console.log("Metadata: " + JSON.stringify(data));
 
                 setCharacters(data.characters || []);
+                setCreatures(data.creatures || []);
                 setLocations(data.locations || []);
                 setEducationalTopics(data.educational_topics || []);
             } catch (error) {
@@ -76,6 +99,22 @@ const GuteNachtGeschichtenApp = () => {
             setCharacters(data.characters || []);
         } catch (error) {
             console.error("Error fetching characters:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const fetchCreatures = async () => {
+        setLoading(true);
+        try {
+            const response = await fetch(`${baseUrl}/creatures`);
+            if (!response.ok) throw new Error('Failed to fetch creatures');
+            const data = await response.json();
+            console.log("Creatures: " + JSON.stringify(data));
+
+            setCreatures(data.creatures || []);
+        } catch (error) {
+            console.error("Error fetching creatures:", error);
         } finally {
             setLoading(false);
         }
@@ -111,6 +150,37 @@ const GuteNachtGeschichtenApp = () => {
         }
     };
 
+    const handleCreateCreature = async () => {
+        try {
+            console.log("New Creature: " + JSON.stringify(newCreature));
+            const response = await fetch(`${baseUrl}/creatures/create`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(newCreature),
+            });
+
+            console.log("Response create new Creature: " + JSON.stringify(response));
+
+            if (!response.ok) throw new Error('Failed to create creature');
+
+            await fetchCreatures();
+
+            setNewCreature({
+                name: '',
+                // age: '',
+                gender: '',
+                looks_like: '',
+                interests: [],
+                personality_traits: [],
+            });
+            // window.location.reload();
+        } catch (error) {
+            console.error("Error creating creature:", error);
+        }
+    };
+
     const handleGenerateStory = async () => {
         try {
             // // Nur IDs der Charaktere an das Backend senden
@@ -129,19 +199,29 @@ const GuteNachtGeschichtenApp = () => {
             const data = await response.json();
             console.log("Response create new Story: " + JSON.stringify(data));
             setGeneratedStory(data.text);
-            const element = document.getElementById('story-section');
-            if (element) {
-                element.scrollIntoView({ behavior: 'smooth' });
-            } else {
-                console.log("Element with ID 'story-section' not found.")
-            }
+
+            scrollToElement('story-section');
         } catch (error) {
             console.error("Failed to generate story", error);
         }
     };
 
+    const scrollToElement = (element_id: string) => {
+        const element = document.getElementById(element_id);
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+        } else {
+            console.log(`Element with ID ${element_id} not found.`)
+        }
+    }
+
+    const onUsageHintLinkClick = (e: { preventDefault: () => void; }) => {
+        e.preventDefault();
+        scrollToElement('nutzungshinweise')
+    };
+
     return (
-        <div className="container mx-auto p-4">
+        <div className="container mx-auto p-2">
             <h1 className="text-3xl font-bold mb-6">
                 <Image
                     src="/der_geschichtenerzaehler.jpeg"
@@ -161,17 +241,25 @@ const GuteNachtGeschichtenApp = () => {
                         Gerne erzähle ich dir eine spannende und lehrreiche Geschichte.
                     </div>
                     <div className="mb-4">
-                        Bevor es losgeht, lies unbedingt die <Link className="font-medium text-blue-600 underline dark:text-blue-500 hover:no-underline" href="#nutzungsbedingungen">Nutzungsbedingungen</Link> weiter unten.
+                        Bevor es losgeht, lies unbedingt die <Link className="font-medium text-blue-600 underline dark:text-blue-500 hover:no-underline" href="#" onClick={onUsageHintLinkClick}>Nutzungshinweise</Link> weiter unten.
+                    </div>
+                    <div>
+                        Durch die Nutzung der Seite erklärst du dich damit einverstanden.
                     </div>
                     <div className="mb-4">
-                        Erstelle dazu entweder zuerst einen neuen Charakter oder wähle aus den bereits bestehenden weiter unten.
+                        Erstelle nun entweder zuerst einen neuen Charakter oder wähle aus den bereits bestehenden Charaketeren weiter unten.
                     </div>
                     <CharacterCreationForm
                         newCharacter={newCharacter}
                         setNewCharacter={setNewCharacter}
                         handleCreateCharacter={handleCreateCharacter}
                     />
-                    <div className="mb-4">
+                    <CreatureCreationForm
+                        newCreature={newCreature}
+                        setNewCreature={setNewCreature}
+                        handleCreateCreature={handleCreateCreature}
+                    />
+                    <div className="mb-10">
                         <p>
                             Wähle nun deine Charaktere aus, an welchem Ort die Geschichte spielen und welches pädagogische Thema vermittelt werden soll.
                         </p>
@@ -183,6 +271,7 @@ const GuteNachtGeschichtenApp = () => {
                         newStoryRequest={storyRequest}
                         setStoryRequest={setStoryRequest}
                         characters={characters}
+                        creatures={creatures}
                         locations={locations}
                         educational_topic={educational_topic}
                         handleGenerateStory={handleGenerateStory}
@@ -192,19 +281,26 @@ const GuteNachtGeschichtenApp = () => {
                     </div>
                 </>
             )}
-            <Card id="nutzungsbedingungen" className="mb-4 space-y-4">
+            <Card id="nutzungshinweise" className="mb-4">
                 <CardHeader>
-                    <CardTitle>Nutzungsbedingungen</CardTitle>
+                    <CardTitle>Nutzungshinweise</CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <div>
-                        <p>
+                    <ul>
+                        <li>
                             Es wird keine Haftung oder Verantwortung für die generierten Texte übernommen.
-                        </p>
-                        <p>
-                            Es kann jederzeit dazu kommen, dass der Text-Generator nicht mehr funktioniert (z.B. durch Überlastung, geänderte Nutzungsbedingungen seitens der eingesetzten Drittanbieter, etc.)
-                        </p>
-                    </div>
+                        </li>
+                        <li>
+                            Andere sehen die gleichen Charaktere und Fabelwesen.
+                        </li>
+                        <li>
+                            Die Qualität von Texten, die durch "Künstliche Intelligenz" erzeugt werden, kann erheblich schwanken.
+                            Dies kann zu teilweise (grammatikalisch) falschen, sinnfreien oder sogar lustigen Ergebnissen führen.
+                        </li>
+                        <li>
+                            Es kann jederzeit dazu kommen, dass der Text-Generator nicht mehr funktioniert (z.B. durch Überlastung der Server oder geänderter Nutzungsbedingungen seitens der eingesetzten Drittanbieter, etc.)
+                        </li>
+                    </ul>
                 </CardContent>
             </Card>
         </div>

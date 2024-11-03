@@ -8,7 +8,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { BookOpen } from 'lucide-react';
 
 interface Character {
-    id: number;
+    id: string;
     name: string;
     age: string;
     gender: string;
@@ -16,12 +16,24 @@ interface Character {
     interests: string;
 }
 
+interface Creature {
+    id: string;
+    name: string;
+    // age: string;
+    gender: string;
+    looks_like: string;
+    personality_traits: string;
+    interests: string;
+}
+
 interface StoryGenerationFormProps {
     characters: Character[];
+    creatures: Creature[];
     locations: string[];
     educational_topic: string[];
     newStoryRequest: {
         characters: Character[];
+        creatures: Creature[];
         location: string;
         educational_topic: string;
         age_group: string;
@@ -32,6 +44,7 @@ interface StoryGenerationFormProps {
 
 const StoryGenerationForm: React.FC<StoryGenerationFormProps> = ({
     characters,
+    creatures,
     locations,
     educational_topic,
     newStoryRequest,
@@ -41,9 +54,14 @@ const StoryGenerationForm: React.FC<StoryGenerationFormProps> = ({
     // Effect zum Synchronisieren der ausgewählten Charaktere
     useEffect(() => {
         console.log("Characters in StoryGenerationForm:" + JSON.stringify(characters));
+        console.log("Creatures in StoryGenerationForm:" + JSON.stringify(creatures));
         // Finde alle ausgewählten Charaktere, die noch in der Hauptliste existieren
         const validCharacters = characters.filter(char =>
             newStoryRequest.characters.some(selected => selected.id === char.id)
+        );
+
+        const validCreatures = creatures.filter(char =>
+            newStoryRequest.creatures.some(selected => selected.id === char.id)
         );
 
         // Aktualisiere nur, wenn sich etwas geändert hat
@@ -53,7 +71,14 @@ const StoryGenerationForm: React.FC<StoryGenerationFormProps> = ({
                 characters: validCharacters
             });
         }
-    }, [characters, newStoryRequest, setStoryRequest]);
+
+        if (validCreatures.length !== newStoryRequest.creatures.length) {
+            setStoryRequest({
+                ...newStoryRequest,
+                creatures: validCreatures
+            });
+        }
+    }, [characters, creatures, newStoryRequest, setStoryRequest]);
 
     const handleCharacterToggle = (character: Character) => {
         const isSelected = newStoryRequest.characters.some(selected => selected.id === character.id);
@@ -67,15 +92,27 @@ const StoryGenerationForm: React.FC<StoryGenerationFormProps> = ({
         setStoryRequest({ ...newStoryRequest, characters: updatedCharacters });
     };
 
+    const handleCreatureToggle = (creature: Creature) => {
+        const isSelected = newStoryRequest.creatures.some(selected => selected.id === creature.id);
+
+        const updatedCreatures = isSelected
+            ? newStoryRequest.creatures.filter(selected => selected.id !== creature.id)
+            : [...newStoryRequest.creatures, creature];
+
+        console.log("updatedCreatures: " + JSON.stringify(updatedCreatures));
+
+        setStoryRequest({ ...newStoryRequest, creatures: updatedCreatures });
+    };
+
     return (
         <Card className="mb-4">
             <CardHeader>
                 <CardTitle>Geschichte generieren</CardTitle>
             </CardHeader>
             <CardContent>
-                <div className="space-y-4">
+                <div>
                     {/* Character Checkbox List */}
-                    <div>
+                    <div className="mb-4">
                         <h3>Charaktere auswählen:</h3>
                         {characters.map((character) => (
                             <div key={character.id} className="flex items-center space-x-2">
@@ -85,7 +122,24 @@ const StoryGenerationForm: React.FC<StoryGenerationFormProps> = ({
                                     onCheckedChange={() => handleCharacterToggle(character)}
                                 />
                                 <label>
-                                    <strong>{character.name}</strong> Alter: {character.age}; Geschlecht: {character.gender}; Charaktereigenschaften: {character.personality_traits}; Interessen: {character.interests}
+                                    <strong>{character.name}</strong> - Alter: {character.age}; Geschlecht: {character.gender}; Charaktereigenschaften: {character.personality_traits}; Interessen: {character.interests}
+                                </label>
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* Creature Checkbox List */}
+                    <div className="mb-4">
+                        <h3>Fabelwesen auswählen:</h3>
+                        {creatures.map((creature) => (
+                            <div key={creature.id} className="flex items-center space-x-2">
+                                <Checkbox
+                                    checked={newStoryRequest.creatures.some(selected => selected.id === creature.id)}
+                                    value={creature.id}
+                                    onCheckedChange={() => handleCreatureToggle(creature)}
+                                />
+                                <label>
+                                    <strong>{creature.name}</strong> - Gestalt: {creature.looks_like}; Geschlecht: {creature.gender}; Charaktereigenschaften: {creature.personality_traits}; Weiß alles über: {creature.interests}
                                 </label>
                             </div>
                         ))}
@@ -95,7 +149,7 @@ const StoryGenerationForm: React.FC<StoryGenerationFormProps> = ({
                     <select
                         value={newStoryRequest.location}
                         onChange={(e) => setStoryRequest({ ...newStoryRequest, location: e.target.value })}
-                        className="w-full p-2 border rounded"
+                        className="w-full p-2 border rounded mb-2"
                     >
                         <option value="" disabled>Ort der Geschichte auswählen</option>
                         {locations.map((location) => (
@@ -109,7 +163,7 @@ const StoryGenerationForm: React.FC<StoryGenerationFormProps> = ({
                     <select
                         value={newStoryRequest.educational_topic}
                         onChange={(e) => setStoryRequest({ ...newStoryRequest, educational_topic: e.target.value })}
-                        className="w-full p-2 border rounded"
+                        className="w-full p-2 border rounded mb-2"
                     >
                         <option value="" disabled>Pädagogisches Thema auswählen</option>
                         {educational_topic.map((topic) => (
@@ -123,7 +177,7 @@ const StoryGenerationForm: React.FC<StoryGenerationFormProps> = ({
                     <select
                         value={newStoryRequest.age_group}
                         onChange={(e) => setStoryRequest({ ...newStoryRequest, age_group: e.target.value })}
-                        className="w-full p-2 border rounded"
+                        className="w-full p-2 border rounded mb-4"
                     >
                         <option value="" disabled>Altersgruppe auswählen</option>
                         <option value="Kinder">Kinder</option>
