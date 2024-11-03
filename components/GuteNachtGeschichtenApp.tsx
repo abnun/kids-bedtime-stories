@@ -19,7 +19,7 @@ interface Character {
 }
 
 const GuteNachtGeschichtenApp = () => {
-    const baseUrl = "http://localhost:8000/api";
+    const baseUrl = "https://kids-bedtime-stories-api.onrender.com/api";
     const [characters, setCharacters] = useState<Character[]>([]);
     const [locations, setLocations] = useState<string[]>([]);
     const [educational_topic, setEducationalTopics] = useState<string[]>([]);
