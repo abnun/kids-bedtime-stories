@@ -10,7 +10,7 @@ interface GeneratedStoryCardProps {
 
 const GeneratedStoryCard: React.FC<GeneratedStoryCardProps> = ({ generatedStory }) => (
     <Card className="mb-20">
-        <CardHeader><CardTitle className="text-2xl">Deine Geschichte</CardTitle></CardHeader>
+        <CardHeader><CardTitle className="text-2xl">Hier ist Deine Geschichte</CardTitle></CardHeader>
 
         <CardContent>
             <p className="whitespace-pre-wrap">

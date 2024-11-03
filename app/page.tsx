@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <div>
       <Head>
-        <title>Personalisierte Gute-Nacht-Geschichten</title>
+        <title>Personalisierte Geschichten</title>
         <meta name="description" content="KI-generierte Gute-Nacht-Geschichten für Kinder" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

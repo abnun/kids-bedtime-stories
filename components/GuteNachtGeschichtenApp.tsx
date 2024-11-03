@@ -38,6 +38,7 @@ const GuteNachtGeschichtenApp = () => {
     const [locations, setLocations] = useState<string[]>([]);
     const [educational_topic, setEducationalTopics] = useState<string[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
+    const [storyLoading, setStoryLoading] = useState<boolean>(false);
 
     const [newCharacter, setNewCharacter] = useState({
         name: '',
@@ -189,7 +190,7 @@ const GuteNachtGeschichtenApp = () => {
             //     ...storyRequest,
             //     characters: storyRequest.characters.map(character => character.id)
             // };
-
+            setStoryLoading(true)
             console.log("Story Request: " + JSON.stringify(storyRequest));
             const response = await fetch(`${baseUrl}/stories/generate`, {
                 method: 'POST',
@@ -201,6 +202,7 @@ const GuteNachtGeschichtenApp = () => {
             console.log("Response create new Story: " + JSON.stringify(data));
             setGeneratedStory(data.text);
 
+            setStoryLoading(false)
             scrollToElement('story-section');
         } catch (error) {
             console.error("Failed to generate story", error);
@@ -236,18 +238,18 @@ const GuteNachtGeschichtenApp = () => {
 
             {loading ? (
                 <div className="mb-20">
-                    <Spinner label="Wird geladen..." size="lg" color="secondary" />
+                    <Spinner label="Einen kleinen Moment, ich bin gleich bei dir..." size="lg" color="secondary" />
                 </div>
             ) : (
                 <>
-                    <div>
+                    <div className="mb-4">
                         Gerne erzähle ich dir eine spannende und lehrreiche Geschichte.
                     </div>
-                    <div className="mb-4">
+                    <div>
                         Bevor es losgeht, lies unbedingt die <Link className="font-medium text-blue-600 underline dark:text-blue-500 hover:no-underline" href="#" onClick={onUsageHintLinkClick}>Nutzungshinweise</Link> weiter unten.
                     </div>
-                    <div>
-                        Durch die Nutzung der Seite erklärst du dich damit einverstanden.
+                    <div className="mb-4">
+                        Durch die Nutzung dieser Seite erklärst du dich damit einverstanden.
                     </div>
                     <div className="mb-4">
                         Erstelle nun entweder zuerst einen neuen Charakter oder wähle aus den bereits bestehenden Charaketeren weiter unten.
@@ -257,6 +259,9 @@ const GuteNachtGeschichtenApp = () => {
                         setNewCharacter={setNewCharacter}
                         handleCreateCharacter={handleCreateCharacter}
                     />
+                    <div className="mb-4">
+                        Wenn du möchtest, erstelle nun noch ein Fabelwesen oder wähle eines aus den bereits bestehenden weiter unten.
+                    </div>
                     <CreatureCreationForm
                         newCreature={newCreature}
                         setNewCreature={setNewCreature}
@@ -267,7 +272,7 @@ const GuteNachtGeschichtenApp = () => {
                             Wähle nun deine Charaktere aus, an welchem Ort die Geschichte spielen und welches pädagogische Thema vermittelt werden soll.
                         </p>
                         <p>
-                            Wenn du möchtest, kannst du auch noch spezielle Wesen zu der Geschichte hinzufügen.
+                            Wenn du möchtest, kannst du auch noch Fabelwesen zu der Geschichte hinzufügen.
                         </p>
                     </div>
                     <StoryGenerationForm
@@ -279,9 +284,17 @@ const GuteNachtGeschichtenApp = () => {
                         educational_topic={educational_topic}
                         handleGenerateStory={handleGenerateStory}
                     />
-                    <div id="story-section">
-                        {generatedStory && <GeneratedStoryCard generatedStory={generatedStory} />}
-                    </div>
+                    {storyLoading ? (
+                        <div className="mb-20">
+                            <Spinner label="Ich überlege mir nun eine Geschichte, einen kleinen Moment bitte..." size="lg" color="secondary" />
+                        </div>
+                    ) : (
+                        <>
+                            <div id="story-section">
+                                {generatedStory && <GeneratedStoryCard generatedStory={generatedStory} />}
+                            </div>
+                        </>
+                    )}
                 </>
             )}
             <Card id="nutzungshinweise" className="mb-4">
