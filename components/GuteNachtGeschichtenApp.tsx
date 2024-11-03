@@ -252,7 +252,7 @@ const GuteNachtGeschichtenApp = () => {
                         Durch die Nutzung dieser Seite erklärst du dich damit einverstanden.
                     </div>
                     <div className="mb-4">
-                        Erstelle nun entweder zuerst einen neuen Charakter oder wähle aus den bereits bestehenden Charaketeren weiter unten.
+                        Erstelle nun entweder zuerst einen neuen Charakter oder wähle aus den bereits bestehenden Charakteren weiter unten.
                     </div>
                     <CharacterCreationForm
                         newCharacter={newCharacter}
