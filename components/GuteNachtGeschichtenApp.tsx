@@ -30,7 +30,7 @@ interface Creature {
 }
 
 const GuteNachtGeschichtenApp = () => {
-    const baseUrl = process.env.NEXT_PUBLIC_KIDS_BEDTIME_STORIES_API_URL ? process.env.NEXT_PUBLIC_KIDS_BEDTIME_STORIES_API_URL : "https://kids-bedtime-stories-api.onrender.com/api";
+    const baseUrl = process.env.NEXT_PUBLIC_KIDS_BEDTIME_STORIES_API_URL;
     console.log("API URL: " + baseUrl)
     const [characters, setCharacters] = useState<Character[]>([]);
     const [creatures, setCreatures] = useState<Creature[]>([]);
@@ -294,7 +294,7 @@ const GuteNachtGeschichtenApp = () => {
                             Andere sehen die gleichen Charaktere und Fabelwesen.
                         </li>
                         <li>
-                            Die Qualität von Texten, die durch "Künstliche Intelligenz" erzeugt werden, kann erheblich schwanken.
+                            Die Qualität von Texten, die durch &quot;Künstliche Intelligenz&quot; erzeugt werden, kann erheblich schwanken.
                             Dies kann zu teilweise (grammatikalisch) falschen, sinnfreien oder sogar lustigen Ergebnissen führen.
                         </li>
                         <li>
