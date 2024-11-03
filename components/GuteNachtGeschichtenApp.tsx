@@ -233,12 +233,12 @@ const GuteNachtGeschichtenApp = () => {
                     height="150"
                     className='mb-4'
                 />
-                Hallo ... ich bin der Geschichten-Erzähler.
+                Hallo, ich bin der Geschichten-Erzähler.
             </h1>
 
             {loading ? (
                 <div className="mb-20">
-                    <Spinner label="Einen kleinen Moment, ich bin gleich bei dir..." size="lg" color="secondary" />
+                    <Spinner label="Einen kleinen Moment, ich bin gleich voll und ganz bei dir ..." size="lg" color="secondary" />
                 </div>
             ) : (
                 <>
@@ -286,7 +286,7 @@ const GuteNachtGeschichtenApp = () => {
                     />
                     {storyLoading ? (
                         <div className="mb-20">
-                            <Spinner label="Ich überlege mir nun eine Geschichte, einen kleinen Moment bitte..." size="lg" color="secondary" />
+                            <Spinner label="Ich überlege mir nun eine Geschichte, das dauert einen kleinen Moment ..." size="lg" color="secondary" />
                         </div>
                     ) : (
                         <>
@@ -304,7 +304,7 @@ const GuteNachtGeschichtenApp = () => {
                 <CardContent>
                     <ul className='list-disc'>
                         <li>
-                            Es wird keine Haftung oder Verantwortung für die generierten Texte übernommen.
+                            Nutzung auf eigene Gewähr. Es wird keine Haftung oder Verantwortung für die generierten Texte übernommen.
                         </li>
                         <li>
                             Die Server legen sich bei Inaktivität schlafen, was dazu führt, dass die Seite erstmal sehr lange läd.
