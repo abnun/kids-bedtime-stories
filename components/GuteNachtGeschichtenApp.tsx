@@ -4,6 +4,7 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image'
 import Link from 'next/link'
+import { Spinner } from "@nextui-org/react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import CharacterCreationForm from './CharacterCreationForm';
 import CreatureCreationForm from './CreatureCreationForm';
@@ -228,13 +229,15 @@ const GuteNachtGeschichtenApp = () => {
                     alt="Der Geschichten-Erzähler"
                     width="150"
                     height="150"
+                    className='mb-4'
                 />
-                <br />
                 Hallo ... ich bin der Geschichten-Erzähler.
             </h1>
 
             {loading ? (
-                <p>Loading...</p>
+                <div className="mb-20">
+                    <Spinner label="Wird geladen..." size="lg" color="secondary" />
+                </div>
             ) : (
                 <>
                     <div>
@@ -286,12 +289,15 @@ const GuteNachtGeschichtenApp = () => {
                     <CardTitle>Nutzungshinweise</CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <ul>
+                    <ul className='list-disc'>
                         <li>
                             Es wird keine Haftung oder Verantwortung für die generierten Texte übernommen.
                         </li>
                         <li>
-                            Andere sehen die gleichen Charaktere und Fabelwesen.
+                            Die Server legen sich bei Inaktivität schlafen, was dazu führt, dass die Seite erstmal sehr lange läd.
+                        </li>
+                        <li>
+                            Andere können die Charaktere und Fabelwesen ebenso erstellen, also nicht wundern, wenn die Liste plötzlich anders aussieht.
                         </li>
                         <li>
                             Die Qualität von Texten, die durch &quot;Künstliche Intelligenz&quot; erzeugt werden, kann erheblich schwanken.
