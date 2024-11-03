@@ -30,7 +30,7 @@ interface Creature {
 }
 
 const GuteNachtGeschichtenApp = () => {
-    const baseUrl = process.env.NEXT_PUBLIC_KIDS_BEDTIME_STORIES_API_URL;
+    const baseUrl = process.env.NEXT_PUBLIC_KIDS_BEDTIME_STORIES_API_URL ? process.env.NEXT_PUBLIC_KIDS_BEDTIME_STORIES_API_URL : "https://kids-bedtime-stories-api.onrender.com/api";
     console.log("API URL: " + baseUrl)
     const [characters, setCharacters] = useState<Character[]>([]);
     const [creatures, setCreatures] = useState<Creature[]>([]);
