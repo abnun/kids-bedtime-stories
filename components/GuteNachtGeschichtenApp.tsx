@@ -298,7 +298,7 @@ const GuteNachtGeschichtenApp = () => {
                             Dies kann zu teilweise (grammatikalisch) falschen, sinnfreien oder sogar lustigen Ergebnissen führen.
                         </li>
                         <li>
-                            Es kann jederzeit dazu kommen, dass der Text-Generator nicht mehr funktioniert (z.B. durch Überlastung der Server oder geänderter Nutzungsbedingungen seitens der eingesetzten Drittanbieter, etc.)
+                            Es kann jederzeit dazu kommen, dass der Text-Generator nicht mehr funktioniert oder sehr lange läd (z.B. durch Überlastung der Server oder geänderter Nutzungsbedingungen seitens der eingesetzten Drittanbieter, etc.)
                         </li>
                     </ul>
                 </CardContent>
