@@ -236,13 +236,15 @@ const GuteNachtGeschichtenApp = () => {
     return (
         <div className="container mx-auto p-2">
             <h1 className="text-3xl font-bold mb-6">
-                <Image
-                    src="/der_geschichtenerzaehler.jpeg"
-                    alt="Der Geschichten-Erzähler"
-                    width="150"
-                    height="150"
-                    className='mb-4'
-                />
+                <a href='/'>
+                    <Image
+                        src="/der_geschichtenerzaehler.jpeg"
+                        alt="Der Geschichten-Erzähler"
+                        width="150"
+                        height="150"
+                        className='mb-4'
+                    />
+                </a>
                 Hallo, ich bin der Geschichten-Erzähler.
             </h1>
 
