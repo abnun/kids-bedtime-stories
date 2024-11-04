@@ -110,7 +110,7 @@ const StoryGenerationForm: React.FC<StoryGenerationFormProps> = ({
                 <CardTitle>Geschichte generieren</CardTitle>
             </CardHeader>
             <CardContent>
-                <div>
+                <div id='geschichten-formular'>
                     {/* Character Checkbox List */}
                     <div className="mb-4">
                         <h3>Charaktere auswählen:</h3>

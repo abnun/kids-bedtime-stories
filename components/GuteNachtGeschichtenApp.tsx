@@ -223,6 +223,11 @@ const GuteNachtGeschichtenApp = () => {
         scrollToElement('nutzungshinweise')
     };
 
+    const onScrollToStoryFormLinkClick = (e: { preventDefault: () => void; }) => {
+        e.preventDefault();
+        scrollToElement('geschichten-formular')
+    };
+
     return (
         <div className="container mx-auto p-2">
             <h1 className="text-3xl font-bold mb-6">
@@ -252,7 +257,7 @@ const GuteNachtGeschichtenApp = () => {
                         Durch die Nutzung dieser Seite erklärst du dich damit einverstanden.
                     </div>
                     <div className="mb-4">
-                        Erstelle nun entweder zuerst einen neuen Charakter oder wähle aus den bereits bestehenden Charakteren weiter unten.
+                        Erstelle nun entweder zuerst einen neuen Charakter oder wähle aus den <Link className="font-medium text-orange-600 underline dark:text-orange-500 hover:no-underline" href="#" onClick={onScrollToStoryFormLinkClick}>bereits bestehenden</Link> weiter unten Charakteren weiter unten.
                     </div>
                     <CharacterCreationForm
                         newCharacter={newCharacter}
@@ -260,7 +265,7 @@ const GuteNachtGeschichtenApp = () => {
                         handleCreateCharacter={handleCreateCharacter}
                     />
                     <div className="mb-4">
-                        Wenn du möchtest, erstelle nun noch ein Fabelwesen oder wähle eines aus den bereits bestehenden weiter unten.
+                        Wenn du möchtest, erstelle nun noch ein Fabelwesen oder wähle eines aus den <Link className="font-medium text-orange-600 underline dark:text-orange-500 hover:no-underline" href="#" onClick={onScrollToStoryFormLinkClick}>bereits bestehenden</Link> weiter unten.
                     </div>
                     <CreatureCreationForm
                         newCreature={newCreature}
@@ -310,7 +315,7 @@ const GuteNachtGeschichtenApp = () => {
                             Die Server legen sich bei Inaktivität schlafen, was dazu führt, dass die Seite erstmal sehr lange läd.
                         </li>
                         <li>
-                            Andere können die Charaktere und Fabelwesen ebenso erstellen, also nicht wundern, wenn die Liste plötzlich anders aussieht.
+                            Andere können die Charaktere und Fabelwesen ebenso erstellen, also nicht wundern, wenn die Liste plötzlich anders und länger aussieht.
                         </li>
                         <li>
                             Die Qualität von Texten, die durch &quot;Künstliche Intelligenz&quot; erzeugt werden, kann erheblich schwanken.
