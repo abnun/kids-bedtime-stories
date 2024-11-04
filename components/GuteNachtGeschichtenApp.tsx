@@ -223,9 +223,14 @@ const GuteNachtGeschichtenApp = () => {
         scrollToElement('nutzungshinweise')
     };
 
-    const onScrollToStoryFormLinkClick = (e: { preventDefault: () => void; }) => {
+    const onScrollToStoryFormCharactersLinkClick = (e: { preventDefault: () => void; }) => {
         e.preventDefault();
-        scrollToElement('geschichten-formular')
+        scrollToElement('geschichten-formular-charaktere')
+    };
+
+    const onScrollToStoryFormCreaturesLinkClick = (e: { preventDefault: () => void; }) => {
+        e.preventDefault();
+        scrollToElement('geschichten-formular-fabelwesen')
     };
 
     return (
@@ -257,7 +262,7 @@ const GuteNachtGeschichtenApp = () => {
                         Durch die Nutzung dieser Seite erklärst du dich damit einverstanden.
                     </div>
                     <div className="mb-4">
-                        Erstelle nun entweder zuerst einen neuen Charakter oder wähle aus den <Link className="font-medium text-orange-600 underline dark:text-orange-500 hover:no-underline" href="#" onClick={onScrollToStoryFormLinkClick}>bereits bestehenden</Link> weiter unten Charakteren weiter unten.
+                        Erstelle nun entweder zuerst einen neuen Charakter oder wähle aus den <Link className="font-medium text-orange-600 underline dark:text-orange-500 hover:no-underline" href="#" onClick={onScrollToStoryFormCharactersLinkClick}>bereits bestehenden</Link> Charakteren weiter unten.
                     </div>
                     <CharacterCreationForm
                         newCharacter={newCharacter}
@@ -265,7 +270,7 @@ const GuteNachtGeschichtenApp = () => {
                         handleCreateCharacter={handleCreateCharacter}
                     />
                     <div className="mb-4">
-                        Wenn du möchtest, erstelle nun noch ein Fabelwesen oder wähle eines aus den <Link className="font-medium text-orange-600 underline dark:text-orange-500 hover:no-underline" href="#" onClick={onScrollToStoryFormLinkClick}>bereits bestehenden</Link> weiter unten.
+                        Wenn du möchtest, erstelle nun noch ein Fabelwesen oder wähle eines aus den <Link className="font-medium text-orange-600 underline dark:text-orange-500 hover:no-underline" href="#" onClick={onScrollToStoryFormCreaturesLinkClick}>bereits bestehenden</Link> Fabelwesen weiter unten.
                     </div>
                     <CreatureCreationForm
                         newCreature={newCreature}

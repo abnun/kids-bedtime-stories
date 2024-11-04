@@ -113,7 +113,7 @@ const StoryGenerationForm: React.FC<StoryGenerationFormProps> = ({
                 <div id='geschichten-formular'>
                     {/* Character Checkbox List */}
                     <div className="mb-4">
-                        <h3>Charaktere auswählen:</h3>
+                        <h3 id='geschichten-formular-charaktere'>Charaktere auswählen:</h3>
                         {characters.map((character) => (
                             <div key={character.id} className="flex items-center space-x-2">
                                 <Checkbox
@@ -130,7 +130,7 @@ const StoryGenerationForm: React.FC<StoryGenerationFormProps> = ({
 
                     {/* Creature Checkbox List */}
                     <div className="mb-4">
-                        <h3>Fabelwesen auswählen:</h3>
+                        <h3 id='geschichten-formular-fabelwesen'>Fabelwesen auswählen:</h3>
                         {creatures.map((creature) => (
                             <div key={creature.id} className="flex items-center space-x-2">
                                 <Checkbox
