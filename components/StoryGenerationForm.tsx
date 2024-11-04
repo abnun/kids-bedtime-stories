@@ -122,7 +122,7 @@ const StoryGenerationForm: React.FC<StoryGenerationFormProps> = ({
                                     onCheckedChange={() => handleCharacterToggle(character)}
                                 />
                                 <label>
-                                    <strong>{character.name}</strong> - Alter: {character.age}; Geschlecht: {character.gender}; Charaktereigenschaften: {character.personality_traits}; Interessen: {character.interests}
+                                    <strong>{character.name}</strong> - Alter: {character.age}; {character.gender}; Charakter: {character.personality_traits}; Interessen: {character.interests}
                                 </label>
                             </div>
                         ))}
@@ -139,7 +139,7 @@ const StoryGenerationForm: React.FC<StoryGenerationFormProps> = ({
                                     onCheckedChange={() => handleCreatureToggle(creature)}
                                 />
                                 <label>
-                                    <strong>{creature.name}</strong> - Gestalt: {creature.looks_like}; Geschlecht: {creature.gender}; Charaktereigenschaften: {creature.personality_traits}; Weiß alles über: {creature.interests}
+                                    <strong>{creature.name}</strong> - Gestalt: {creature.looks_like}; {creature.gender}; Charakter: {creature.personality_traits}; Weiß alles über: {creature.interests}
                                 </label>
                             </div>
                         ))}
