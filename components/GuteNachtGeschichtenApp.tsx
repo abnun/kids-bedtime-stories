@@ -177,7 +177,7 @@ const GuteNachtGeschichtenApp = () => {
                 interests: [],
                 personality_traits: [],
             });
-            // window.location.reload();
+            window.location.reload();
         } catch (error) {
             console.error("Error creating creature:", error);
         }
