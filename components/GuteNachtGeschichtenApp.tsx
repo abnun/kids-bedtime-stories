@@ -293,7 +293,7 @@ const GuteNachtGeschichtenApp = () => {
                         </select>
                     </div>
                     <div className="mb-4">
-                        Wenn du eine neue Geschichte hören möchtest, dann erstelle nun entweder zuerst einen neuen Charakter oder wähle aus den <Link className="font-medium text-orange-600 underline dark:text-orange-500 hover:no-underline" href="#" onClick={onScrollToStoryFormCharactersLinkClick}>bereits bestehenden</Link> Charakteren weiter unten.
+                        Wenn du eine neue Geschichte lesen möchtest, dann erstelle nun entweder zuerst einen neuen Charakter oder wähle aus den <Link className="font-medium text-orange-600 underline dark:text-orange-500 hover:no-underline" href="#" onClick={onScrollToStoryFormCharactersLinkClick}>bereits bestehenden</Link> Charakteren weiter unten.
                     </div>
                     <CharacterCreationForm
                         newCharacter={newCharacter}
