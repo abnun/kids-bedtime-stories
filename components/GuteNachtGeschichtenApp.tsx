@@ -277,7 +277,23 @@ const GuteNachtGeschichtenApp = () => {
                         Durch die Nutzung dieser Seite erklärst du dich damit einverstanden.
                     </div>
                     <div className="mb-4">
-                        Erstelle nun entweder zuerst einen neuen Charakter oder wähle aus den <Link className="font-medium text-orange-600 underline dark:text-orange-500 hover:no-underline" href="#" onClick={onScrollToStoryFormCharactersLinkClick}>bereits bestehenden</Link> Charakteren weiter unten.
+                        Lass mich nachdenken ...
+                        {/* Generated Stories Select */}
+                        <select
+                            value=""
+                            onChange={(e) => setAndScrollToStory(e.target.value)}
+                            className="w-full p-2 border rounded mb-2"
+                        >
+                            <option value="" disabled>Diese Geschichten habe ich bereits erzählt</option>
+                            {stories.map((story) => (
+                                <option key={story.id} value={story.text} title={story.text}>
+                                    {story.text.substring(0, 50)}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                    <div className="mb-4">
+                        Wenn du eine neue Geschichte hören möchtest, dann erstelle nun entweder zuerst einen neuen Charakter oder wähle aus den <Link className="font-medium text-orange-600 underline dark:text-orange-500 hover:no-underline" href="#" onClick={onScrollToStoryFormCharactersLinkClick}>bereits bestehenden</Link> Charakteren weiter unten.
                     </div>
                     <CharacterCreationForm
                         newCharacter={newCharacter}
@@ -309,19 +325,7 @@ const GuteNachtGeschichtenApp = () => {
                         educational_topic={educational_topic}
                         handleGenerateStory={handleGenerateStory}
                     />
-                    {/* Educational Topic Select */}
-                    <select
-                        value=""
-                        onChange={(e) => setAndScrollToStory(e.target.value)}
-                        className="w-full p-2 border rounded mb-2"
-                    >
-                        <option value="" disabled>Diese Geschichten habe ich bereits erzählt</option>
-                        {stories.map((story) => (
-                            <option key={story.id} value={story.text} title={story.text}>
-                                {story.text.substring(0, 50)}
-                            </option>
-                        ))}
-                    </select>
+
                     {storyLoading ? (
                         <div className="mb-20">
                             <Spinner label="Ich überlege mir nun eine Geschichte, das dauert einen kleinen Moment ..." size="lg" color="secondary" />
