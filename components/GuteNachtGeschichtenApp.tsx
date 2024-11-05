@@ -30,15 +30,24 @@ interface Creature {
     interests: string;
 }
 
+interface Story {
+    id: string;
+    created: string
+    request: string
+    text: string;
+}
+
 const GuteNachtGeschichtenApp = () => {
     const baseUrl = process.env.NEXT_PUBLIC_KIDS_BEDTIME_STORIES_API_URL;
     console.log("API URL: " + baseUrl)
     const [characters, setCharacters] = useState<Character[]>([]);
     const [creatures, setCreatures] = useState<Creature[]>([]);
     const [locations, setLocations] = useState<string[]>([]);
+    const [stories, setStories] = useState<Story[]>([]);
     const [educational_topic, setEducationalTopics] = useState<string[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [storyLoading, setStoryLoading] = useState<boolean>(false);
+    const [generatedStory, setGeneratedStory] = useState<string | null>(null);
 
     const [newCharacter, setNewCharacter] = useState({
         name: '',
@@ -65,8 +74,6 @@ const GuteNachtGeschichtenApp = () => {
         age_group: ''
     });
 
-    const [generatedStory, setGeneratedStory] = useState<string | null>(null);
-
     useEffect(() => {
         const fetchMetadata = async () => {
             setLoading(true);
@@ -79,6 +86,7 @@ const GuteNachtGeschichtenApp = () => {
                 setCharacters(data.characters || []);
                 setCreatures(data.creatures || []);
                 setLocations(data.locations || []);
+                setStories(data.stories || []);
                 setEducationalTopics(data.educational_topics || []);
             } catch (error) {
                 console.error("Error loading metadata", error);
@@ -209,6 +217,11 @@ const GuteNachtGeschichtenApp = () => {
         }
     };
 
+    const setAndScrollToStory = (story: string) => {
+        setGeneratedStory(story);
+        scrollToElement('story-section');
+    }
+
     const scrollToElement = (element_id: string) => {
         const element = document.getElementById(element_id);
         if (element) {
@@ -296,6 +309,19 @@ const GuteNachtGeschichtenApp = () => {
                         educational_topic={educational_topic}
                         handleGenerateStory={handleGenerateStory}
                     />
+                    {/* Educational Topic Select */}
+                    <select
+                        value=""
+                        onChange={(e) => setAndScrollToStory(e.target.value)}
+                        className="w-full p-2 border rounded mb-2"
+                    >
+                        <option value="" disabled>Lass mich überlegen, diese Geschichten habe ich bereits erzählt</option>
+                        {stories.map((story) => (
+                            <option key={story.id} value={story.text} title={story.text}>
+                                {story.text}
+                            </option>
+                        ))}
+                    </select>
                     {storyLoading ? (
                         <div className="mb-20">
                             <Spinner label="Ich überlege mir nun eine Geschichte, das dauert einen kleinen Moment ..." size="lg" color="secondary" />
