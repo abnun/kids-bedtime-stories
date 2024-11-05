@@ -287,7 +287,7 @@ const GuteNachtGeschichtenApp = () => {
                             <option value="" disabled>Diese Geschichten habe ich bereits erzählt</option>
                             {stories.map((story) => (
                                 <option key={story.id} value={story.text} title={story.text}>
-                                    {story.text.substring(0, 50)}
+                                    {story.text.substring(0, 80)}
                                 </option>
                             ))}
                         </select>
